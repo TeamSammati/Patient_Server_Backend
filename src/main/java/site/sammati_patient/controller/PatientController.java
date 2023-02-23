@@ -12,17 +12,18 @@ import java.util.List;
 public class PatientController {
     @GetMapping("Request_List/{id}")
     public List<Object> getConsentRequestByPid(@PathVariable("id") Integer patientId){
-        String uri = "http://172.16.133.184:6969/Request_List/"+patientId.toString();
+        String uri = "http://172.16.133.184:6969/Request_List/"+patientId;
+        //IP of Sammati server/API call
         RestTemplate restTemplate = new RestTemplate();
         List<Object> result = restTemplate.getForObject(uri, List.class);
         return result;
     }
 
     @PostMapping("/response/{crid}/{status}")
-    public void generateResponse(@PathVariable("crid") Integer crid,@PathVariable("status") Integer status){
-        String uri = "http://172.16.133.184:6969/response/"+crid.toString()+"/"+status.toString();
+    public Integer generateResponse(@PathVariable("crid") Integer crid,@PathVariable("status") Integer status){
+        String uri = "http://172.16.133.184:6969/response/"+crid+"/"+status;
+        //IP of Sammati server/API call
         RestTemplate restTemplate = new RestTemplate();
-//        restTemplate.postForEntity();
-
+        return restTemplate.postForEntity(uri, null, Integer.class).getBody();
     }
 }
