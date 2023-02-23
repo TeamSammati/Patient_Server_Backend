@@ -23,12 +23,20 @@ public class Patient {
             generator = "patient_id_sequence"
     )
     private Integer patientId;
-    private String patientName;
+    @Column(nullable = false)
+    private String firstName;
+    @Column(nullable = false)
+    private String LastName;
+    @Column(nullable = false)
     private String phoneNumber;
+    @Column(nullable = false)
     private String gender;
     private String UID_Number;
     private String UID_type;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
+    private String password;
     private Date DOB;
     private Date registrationDate;
 }
