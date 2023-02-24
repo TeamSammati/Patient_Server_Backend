@@ -1,4 +1,14 @@
 package site.sammati_patient.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import site.sammati_patient.entity.Patient;
 
-public class PatientRepository {
+import java.util.Optional;
+
+@Repository
+public interface PatientRepository extends JpaRepository<Patient, Long> {
+
+    Optional<Patient> findOneByPhoneNumberAndPassword(String email, String password);
+
+    Patient findByPhoneNumber(String email);
 }
