@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -49,6 +50,9 @@ public class Patient {
 //    }
 
     private String state;
+
+    @Column(nullable = false, unique = true)
+    private String userName;
 
     private String address;
 
