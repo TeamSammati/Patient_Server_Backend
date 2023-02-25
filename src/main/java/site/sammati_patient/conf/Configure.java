@@ -17,7 +17,7 @@ public class Configure {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/save","/login","/*")
+                .requestMatchers("/save","/login","/**")
                 .permitAll();
 
         return httpSecurity.build();
