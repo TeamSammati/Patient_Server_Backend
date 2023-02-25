@@ -22,6 +22,8 @@ public class PatientDto {
     private Date DOB;
     private Date registrationDate;
     private String state;
+    private String userName;
+
     private String address;
     private String pinCode;
     private String passPhoto;

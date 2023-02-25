@@ -3,7 +3,7 @@ package site.sammati_patient.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import site.sammati_patient.Responce.LoginRes;
+//import site.sammati_patient.Responce.LoginRes;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
 import site.sammati_patient.entity.Patient;
@@ -23,7 +23,7 @@ public class PatientServiceImpl implements PatientService {
 
 
     @Override
-    public String addPatient(PatientDto patientDto) {
+    public Integer addPatient(PatientDto patientDto) {
         Date date = Date.valueOf(LocalDate.now());
         Patient employee = new Patient(
                 patientDto.getPatientId(),
@@ -38,6 +38,7 @@ public class PatientServiceImpl implements PatientService {
                 patientDto.getDOB(),
                 patientDto.getRegistrationDate(),
                 patientDto.getState(),
+                patientDto.getUserName(),
                 patientDto.getAddress(),
                 patientDto.getPinCode(),
                 patientDto.getPassPhoto()
@@ -45,31 +46,25 @@ public class PatientServiceImpl implements PatientService {
         employee.setRegistrationDate(date);
         repo.save(employee);
 
-        return employee.getFirstName();
+        return employee.getPatientId();
     }
     PatientDto patientDto;
 
     @Override
-    public LoginRes loginPatient(PatientLoginDto loginDTO) {
+    public Patient loginPatient(PatientLoginDto loginDTO) {
         String msg = "";
-        Patient employee1 = repo.findByPhoneNumber(loginDTO.getPhoneNumber());
-        if (employee1 != null) {
+        Patient patient = repo.findByUserName(loginDTO.getUserName());
+        if (patient != null) {
             String password = loginDTO.getPassword();
-            String encodedPassword = employee1.getPassword();
+            String encodedPassword = patient.getPassword();
             Boolean isPwdRight = passwordEncoder.matches(password,encodedPassword);
             if (isPwdRight) {
-                Optional<Patient> employee = repo.findOneByPhoneNumberAndPassword(loginDTO.getPhoneNumber(), encodedPassword);
-                if (employee.isPresent()) {
-                    return new LoginRes("Login Success", true);
-                } else {
-                    return new LoginRes("Login Failed", false);
-                }
+                return patient;
             } else {
-
-                return new LoginRes("password Not Match", false);
+                return null;
             }
         }else {
-            return new LoginRes("Email not exits", false);
+            return null;
         }
     }
 }

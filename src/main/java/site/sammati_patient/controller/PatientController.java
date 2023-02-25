@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
-import site.sammati_patient.Responce.LoginRes;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
 import site.sammati_patient.entity.Patient;
@@ -37,15 +36,15 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
     @PostMapping("/save")
-    public String savePatient(@RequestBody PatientDto patientDto){
-        String id=patientService.addPatient(patientDto);
+    public Integer savePatient(@RequestBody PatientDto patientDto){
+        int id=patientService.addPatient(patientDto);
         return id;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginPatient(@RequestBody PatientLoginDto patientDto){
+    public Patient loginPatient(@RequestBody PatientLoginDto patientDto){
 //        System.out.printf(patientDto.getPhoneNumber());
-        LoginRes loginMessage=patientService.loginPatient(patientDto);
-        return ResponseEntity.ok(loginMessage);
+        Patient patient=patientService.loginPatient(patientDto);
+        return patient;
     }
 }

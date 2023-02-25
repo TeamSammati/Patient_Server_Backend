@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientLoginDto {
-    private String phoneNumber;
+    private String userName;
     private String password;
 }
