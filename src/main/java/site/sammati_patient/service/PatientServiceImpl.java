@@ -3,16 +3,13 @@ package site.sammati_patient.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-//import site.sammati_patient.Responce.LoginRes;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
 import site.sammati_patient.entity.Patient;
 import site.sammati_patient.repository.PatientRepository;
-import site.sammati_patient.conf.Configure;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
