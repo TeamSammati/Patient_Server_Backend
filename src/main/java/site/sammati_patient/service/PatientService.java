@@ -10,8 +10,8 @@ import site.sammati_patient.entity.Patient;
 
 @Component
 public interface PatientService {
-
-    public Integer addPatient(PatientDto patientDto);
-
-    public Patient loginPatient(PatientLoginDto patientDto);
+//
+//    public Integer addPatient(PatientDto patientDto);
+//
+//    public Patient loginPatient(PatientLoginDto patientDto);
 }
