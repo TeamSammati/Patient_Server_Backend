@@ -1,4 +1,4 @@
-package site.sammati_patient.dto;
+package site.sammati_patient.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,10 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class PatientLoginDto {
-    private String userName;
-    private String password;
+public class AuthenticationResponse {
+    private String token;
 }

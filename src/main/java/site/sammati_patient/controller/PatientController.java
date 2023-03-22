@@ -33,20 +33,20 @@ public class PatientController {
     }
 
 
-    @Autowired
-    private PatientService patientService;
-    @PostMapping("/save")
-    public Integer savePatient(@RequestBody PatientDto patientDto){
-        int id=patientService.addPatient(patientDto);
-        return id;
-    }
-
-    @PostMapping("/login")
-    public Patient loginPatient(@RequestBody PatientLoginDto patientDto){
-//        System.out.printf(patientDto.getPhoneNumber());
-        Patient patient=patientService.loginPatient(patientDto);
-        return patient;
-    }
+//    @Autowired
+//    private PatientService patientService;
+//    @PostMapping("/save")
+//    public Integer savePatient(@RequestBody PatientDto patientDto){
+//        int id=patientService.addPatient(patientDto);
+//        return id;
+//    }
+//
+//    @PostMapping("/login")
+//    public Patient loginPatient(@RequestBody PatientLoginDto patientDto){
+////        System.out.printf(patientDto.getPhoneNumber());
+//        Patient patient=patientService.loginPatient(patientDto);
+//        return patient;
+//    }
 
     @PostMapping("/gs_otp")
     public Integer gsOTP(@RequestParam("phoneNumber") String phno) {
