@@ -2,13 +2,16 @@ package site.sammati_patient.dto;
 
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import site.sammati_patient.util.Role;
 
 import java.sql.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PatientDto {
     private Integer patientId;
     private String firstName;
@@ -27,4 +30,6 @@ public class PatientDto {
     private String address;
     private String pinCode;
     private String passPhoto;
+    private Role role;
+
 }
