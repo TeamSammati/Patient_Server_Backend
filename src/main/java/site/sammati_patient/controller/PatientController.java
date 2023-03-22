@@ -1,7 +1,6 @@
 package site.sammati_patient.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import site.sammati_patient.dto.PatientDto;
@@ -9,15 +8,13 @@ import site.sammati_patient.dto.PatientLoginDto;
 import site.sammati_patient.entity.Patient;
 import site.sammati_patient.service.PatientService;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.List;
+
+import static site.sammati_patient.service.OtpService.*;
 
 @RestController
 public class PatientController {
+
     @GetMapping("Request_List")
     public List<Object> getConsentRequestByPid(@RequestParam("patientId") Integer patientId) {
         String uri = "http://172.16.133.184:6969/Request_List/" + patientId;
@@ -51,39 +48,23 @@ public class PatientController {
         return patient;
     }
 
-    @PostMapping("/send_otp")
-    public Integer sendOTP(@RequestParam("phoneNumber") String phno, @RequestParam("message") String message) {
-        //Third party API call
-        int code=-1;
-        try
-        {
-            String apiKey="Tf0l5vJFUNs3EqRDwmVpjkIHLbYXSBtxGicuhyPQdW9nr2e178brnxh0MUt2DmlTGoPKJLEvaAYN9SW6";
-            String sendId="FSTSMS";
-            message= URLEncoder.encode(message, "UTF-8");
-            String language="english";
-            String route="p";
-            String myUrl="https://www.fast2sms.com/dev/bulk?authorization="+apiKey+"&sender_id="+sendId+"&message="+message+"&language="+language+"&route="+route+"&numbers="+phno;
-
-            URL url=new URL(myUrl);
-            HttpsURLConnection con=(HttpsURLConnection)url.openConnection();
-            con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", "Mozilla/5.0");
-            con.setRequestProperty("cache-control", "no-cache");
-            code=con.getResponseCode();
-            StringBuffer response=new StringBuffer();
-            BufferedReader br=new BufferedReader(new InputStreamReader(con.getInputStream()));
-            while(true)
-            {
-                String line=br.readLine();
-                if(line==null)
-                {
-                    break;
-                }
-                response.append(line);
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        return code;
+    @PostMapping("/gs_otp")
+    public Integer gsOTP(@RequestParam("phoneNumber") String phno) {
+        Integer otp = generateOTP(phno);
+        System.out.println(otp);
+        Integer re = sendOTP(phno, otp.toString());
+        return re;
     }
+
+    @PostMapping("/validate_otp")
+    public boolean validateOTP(@RequestParam("phoneNumber") String phno, @RequestParam("otp") String otp) {
+        String pto = getOPTByKey(phno);
+        if(pto==null)
+            return false;
+        System.out.println("PTO: "+pto);
+        System.out.println("OTP: "+otp);
+
+        return otp.equals(pto);
+    }
+
 }
