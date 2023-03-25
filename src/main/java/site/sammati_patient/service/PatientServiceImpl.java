@@ -1,5 +1,6 @@
 package site.sammati_patient.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,18 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 @Service
+@RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
+
+    private final PatientRepository patientRepository;
+    @Override
+    public Boolean isPatientExist(Integer patientId)
+    {
+        Integer id =patientRepository.patientExist(patientId);
+        if(id!=null)return true;
+
+        return false;
+    }
 //    @Autowired
 //    private PatientRepository repo;
 //    @Autowired
