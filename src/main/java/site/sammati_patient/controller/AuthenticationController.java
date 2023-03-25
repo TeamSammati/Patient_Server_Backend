@@ -2,13 +2,11 @@ package site.sammati_patient.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
 import site.sammati_patient.service.AuthenticationService;
+import site.sammati_patient.service.PatientService;
 import site.sammati_patient.util.AuthenticationResponse;
 
 
@@ -17,6 +15,7 @@ import site.sammati_patient.util.AuthenticationResponse;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+    private final PatientService patientService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -29,5 +28,12 @@ public class AuthenticationController {
             @RequestBody PatientLoginDto request
     ){
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    //As of now this method is whitelist to check the functionality(remove from whitelist)
+    @PostMapping("/global_patient_id_exist/{pId}")
+    public Boolean checkGlobalPatientId(@PathVariable("pId") Integer patientId)
+    {
+        return patientService.isPatientExist(patientId);
     }
 }

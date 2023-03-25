@@ -1,11 +1,8 @@
 package site.sammati_patient.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import site.sammati_patient.dto.PatientDto;
-import site.sammati_patient.dto.PatientLoginDto;
-import site.sammati_patient.entity.Patient;
 import site.sammati_patient.service.PatientService;
 
 import java.util.List;
@@ -13,7 +10,11 @@ import java.util.List;
 import static site.sammati_patient.service.OtpService.*;
 
 @RestController
+@RequiredArgsConstructor
 public class PatientController {
+
+    private final PatientService patientService;
+
 
     @GetMapping("Request_List")
     public List<Object> getConsentRequestByPid(@RequestParam("patientId") Integer patientId) {

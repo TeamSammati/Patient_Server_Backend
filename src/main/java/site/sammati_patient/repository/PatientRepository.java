@@ -1,5 +1,6 @@
 package site.sammati_patient.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import site.sammati_patient.entity.Patient;
 
@@ -13,4 +14,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 //    Patient findByUserName(String email);
 
     Optional<Patient> findByUserName(String username);
+
+    @Query("select p.patientId from Patient p where p.patientId=?1")
+    Integer patientExist(Integer patientId);
 }
