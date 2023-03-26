@@ -26,6 +26,11 @@ public class PatientServiceImpl implements PatientService {
 
         return false;
     }
+
+    @Override
+    public Patient findByUserName(String userName) {
+        return patientRepository.findByUserName(userName).get();
+    }
 //    @Autowired
 //    private PatientRepository repo;
 //    @Autowired

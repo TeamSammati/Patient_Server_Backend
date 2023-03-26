@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
+import site.sammati_patient.entity.Patient;
 import site.sammati_patient.service.AuthenticationService;
 import site.sammati_patient.service.PatientService;
 import site.sammati_patient.util.AuthenticationResponse;
@@ -27,7 +28,13 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody PatientLoginDto request
     ){
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+
+        Patient patient=patientService.findByUserName(request.getUserName());
+        AuthenticationResponse authenticationResponse=AuthenticationResponse.builder()
+                .patient(patient)
+                .token(authenticationService.authenticate(request).getToken())
+                .build();
+        return ResponseEntity.ok(authenticationResponse);
     }
 
     //As of now this method is whitelist to check the functionality(remove from whitelist)

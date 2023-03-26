@@ -1,5 +1,6 @@
 package site.sammati_patient.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -68,7 +69,8 @@ public class Patient implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Token> tokens;
 
     @Override
