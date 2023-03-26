@@ -11,6 +11,8 @@ import site.sammati_patient.entity.Patient;
 @Component
 public interface PatientService {
     Boolean isPatientExist(Integer patientId);
+
+    Patient findByUserName(String userName);
 //
 //    public Integer addPatient(PatientDto patientDto);
 //
