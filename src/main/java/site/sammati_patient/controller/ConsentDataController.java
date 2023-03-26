@@ -14,7 +14,7 @@ import site.sammati_patient.dto.ConsentDataDTO;
 public class ConsentDataController {
     @PostMapping("/send-consent-data")
     public Integer sendConsentData(@RequestBody ConsentDataDTO consentDataDTO){
-        String uri = "http://172.16.144.47:6969/receive-consent-data";
+        String uri = "http://172.16.133.184:6979/receive-consent-data";
 
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();

@@ -12,7 +12,7 @@ import static site.sammati_patient.service.OtpService.*;
 @RequiredArgsConstructor
 public class PatientController {
 
-    private final static String HANSAL="172.16.133.144";
+    private final static String HANSAL="172.16.133.184";
     private final static String RIZWANI="172.16.144.47";
     private final static String SOHAM="172.16.131.147";
     private final static String TUSHAR="";
@@ -72,13 +72,13 @@ public class PatientController {
         return otp.equals(pto);
     }
     @PostMapping("/get_records")
-    public Object getRecords(@RequestParam Integer patientID,@RequestParam Integer reqType)
+    public List<Object> getRecords(@RequestParam Integer patientID,@RequestParam Integer reqType)
     {
         String uri = "http://"+HANSAL+":6979/handle_records?patientID="+patientID+"&"+"reqType="+reqType;
         //IP of Sammati server/API call
         System.out.println("sasasas");
         RestTemplate restTemplate = new RestTemplate();
-        Object result = restTemplate.getForObject(uri, Object.class);
+        List<Object> result = restTemplate.getForObject(uri, List.class);
         System.out.println(result);
         return result;
     }
