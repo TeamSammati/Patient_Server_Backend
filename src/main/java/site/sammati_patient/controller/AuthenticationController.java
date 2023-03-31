@@ -13,6 +13,8 @@ import site.sammati_patient.util.AuthenticationResponse;
 
 import java.util.List;
 
+import static site.sammati_patient.service.OtpService.*;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -46,5 +48,24 @@ public class AuthenticationController {
     public Boolean checkGlobalPatientId(@PathVariable("pId") Integer patientId)
     {
         return patientService.isPatientExist(patientId);
+    }
+
+    @PostMapping("/gs_otp")
+    public Integer gsOTP(@RequestParam("phoneNumber") String phno) {
+        Integer otp = generateOTP(phno);
+        System.out.println(otp);
+        Integer re = sendOTP(phno, otp.toString());
+        return re;
+    }
+
+    @PostMapping("/validate_otp")
+    public boolean validateOTP(@RequestParam("phoneNumber") String phno, @RequestParam("otp") String otp) {
+        String pto = getOPTByKey(phno);
+        if(pto==null)
+            return false;
+        System.out.println("PTO: "+pto);
+        System.out.println("OTP: "+otp);
+
+        return otp.equals(pto);
     }
 }
