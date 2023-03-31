@@ -3,6 +3,7 @@ package site.sammati_patient.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
 import site.sammati_patient.entity.Patient;
@@ -10,10 +11,13 @@ import site.sammati_patient.service.AuthenticationService;
 import site.sammati_patient.service.PatientService;
 import site.sammati_patient.util.AuthenticationResponse;
 
+import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
+@CrossOrigin("*")
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final PatientService patientService;
