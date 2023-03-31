@@ -16,6 +16,9 @@ import site.sammati_patient.token.TokenType;
 import site.sammati_patient.util.AuthenticationResponse;
 import site.sammati_patient.util.Role;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -27,6 +30,7 @@ public class AuthenticationService {
 
     private final TokenRepository tokenRepository;
     public AuthenticationResponse register(PatientDto request) {
+
         var patient= Patient.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -38,9 +42,9 @@ public class AuthenticationService {
                 .pinCode(request.getPinCode())
                 .role(Role.USER)
                 .state(request.getState())
-                .registrationDate(request.getRegistrationDate())
-                .UID_Number(request.getUID_Number())
-                .UID_type(request.getUID_type())
+                .registrationDate(Date.valueOf(LocalDate.now()))
+                .UID_Number(request.getUidNumber())
+                .UID_type(request.getUidType())
                 .passPhoto(request.getPassPhoto())
                 .userName(request.getUserName())
                 .password(this.passwordEncoder.encode(request.getPassword()))

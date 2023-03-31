@@ -18,8 +18,8 @@ public class PatientDto {
     private String LastName;
     private String phoneNumber;
     private String gender;
-    private String UID_Number;
-    private String UID_type;
+    private String uidNumber;
+    private String uidType;
     private String email;
     private String password;
     private Date DOB;
@@ -29,7 +29,8 @@ public class PatientDto {
 
     private String address;
     private String pinCode;
-    private String passPhoto;
+    private byte[] passPhoto;
+
     private Role role;
 
 }

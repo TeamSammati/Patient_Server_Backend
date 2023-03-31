@@ -35,19 +35,19 @@ public class Patient implements UserDetails {
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String phoneNumber;
     @Column(nullable = false)
     private String gender;
     @Column(unique = true)
     private String UID_Number;
     private String UID_type;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
     @Column(nullable = false)
     private String password;
     private Date DOB;
-//    @Temporal(TemporalType.DATE)
+//   @Temporal(TemporalType.DATE)
     private Date registrationDate;
 //    @PrePersist
 //    private void onCreate(){
@@ -64,7 +64,9 @@ public class Patient implements UserDetails {
 
     private String pinCode;
 
-    private String passPhoto;
+    @Lob
+    @Column(length=100000)
+    private byte[] passPhoto;
 
     @Enumerated(EnumType.STRING)
     private Role role;
