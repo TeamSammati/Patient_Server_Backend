@@ -1,6 +1,11 @@
 package site.sammati_patient.service;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +24,12 @@ import site.sammati_patient.util.Role;
 import java.sql.Date;
 import java.time.LocalDate;
 
+import java.nio.file.Paths;
+import java.io.ByteArrayOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.Base64;
+import javax.imageio.ImageIO;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -49,14 +60,34 @@ public class AuthenticationService {
                 .userName(request.getUserName())
                 .password(this.passwordEncoder.encode(request.getPassword()))
                 .build();
+
         var savedUser=repository.save(patient);
         var jwtToken=jwtService.generateToken(patient);
+        String data = String.valueOf(savedUser.getPatientId());
+        String path = "./target/qr/"+data+".png";
 
-        savedUserToken(savedUser, jwtToken);
+        try {
+            BitMatrix matrix = new MultiFormatWriter()
+                    .encode(data, BarcodeFormat.QR_CODE, 500, 500);
+
+            MatrixToImageWriter.writeToPath(matrix, "png", Paths.get(path));
+
+            byte[] fileContent = FileUtils.readFileToByteArray(new File(path));
+            String encodedString = Base64.getEncoder().encodeToString(fileContent);
+            encodedString="data:image/png;base64,"+encodedString;
+            System.out.println(encodedString);
+            System.out.println(patient.getPatientId());
+            repository.addQR(encodedString,patient.getPatientId());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+//        savedUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
             .token(jwtToken)
             .build();
     }
+
 
 
 

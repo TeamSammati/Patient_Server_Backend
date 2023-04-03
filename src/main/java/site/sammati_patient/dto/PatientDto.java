@@ -29,7 +29,7 @@ public class PatientDto {
 
     private String address;
     private String pinCode;
-    private byte[] passPhoto;
+    private String passPhoto;
 
     private Role role;
 

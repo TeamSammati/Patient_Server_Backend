@@ -64,9 +64,11 @@ public class Patient implements UserDetails {
 
     private String pinCode;
 
-    @Lob
-    @Column(length=100000)
-    private byte[] passPhoto;
+    @Column(columnDefinition = "MEDIUMTEXT")
+    private String passPhoto;
+
+    @Column(columnDefinition = "TEXT")
+    private String qrCode;
 
     @Enumerated(EnumType.STRING)
     private Role role;
