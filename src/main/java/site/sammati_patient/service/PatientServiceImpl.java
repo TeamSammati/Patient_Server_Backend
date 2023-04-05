@@ -6,12 +6,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
+import site.sammati_patient.dto.PatientOtpDto;
 import site.sammati_patient.entity.Patient;
 import site.sammati_patient.repository.PatientRepository;
 import site.sammati_patient.util.Role;
 
 import java.sql.Date;
 import java.time.LocalDate;
+
+import static site.sammati_patient.service.OtpService.getOPTByKey;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,51 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient findByUserName(String userName) {
         return patientRepository.findByUserName(userName).get();
+    }
+
+    @Override
+    public PatientDto getPatientData(PatientOtpDto patientOtpDto)
+    {
+        String pto = getOPTByKey(Integer.toString(patientOtpDto.getPatientId()));
+        //time expire
+        if(pto==null)
+        {
+            return null;
+        }
+        System.out.println("PTO: "+pto);
+        System.out.println("OTP: "+patientOtpDto.getOtp());
+        //if patient type wrong otp
+        if(!patientOtpDto.getOtp().equals(pto))
+        {
+            return null;
+        }
+        Patient patient=patientRepository.getPatientData(patientOtpDto.getPatientId());
+        PatientDto patientDto=PatientDto.builder()
+                        .patientId(patient.getPatientId())
+                        .firstName(patient.getFirstName())
+                        .LastName(patient.getLastName())
+                        .phoneNumber(patient.getPhoneNumber())
+                        .gender(patient.getGender())
+                        .uidNumber(patient.getUID_Number())
+                        .uidType(patient.getUID_type())
+                        .email(patient.getEmail())
+                        .password(patient.getPassword())
+                        .DOB(patient.getDOB())
+                        .registrationDate(patient.getRegistrationDate())
+                        .state(patient.getState())
+                        .userName(patient.getUsername())
+                        .address(patient.getAddress())
+                        .pinCode(patient.getPinCode())
+                        .passPhoto(patient.getPassPhoto())
+                        .role(patient.getRole())
+                        .build();
+        System.out.println(patientDto);
+        return patientDto;
+    }
+
+    @Override
+    public String getPatientMobileNumber(Integer patientId) {
+        return patientRepository.getPatientMobile(patientId);
     }
 //    @Autowired
 //    private PatientRepository repo;

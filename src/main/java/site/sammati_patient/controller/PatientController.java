@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import site.sammati_patient.entity.Patient;
 import site.sammati_patient.service.PatientService;
 
 import java.util.List;
@@ -70,4 +71,7 @@ public class PatientController {
 //        System.out.println(result);
         return result;
     }
+
+
+
 }

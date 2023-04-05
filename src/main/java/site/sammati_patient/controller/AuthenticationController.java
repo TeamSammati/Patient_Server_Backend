@@ -1,11 +1,13 @@
 package site.sammati_patient.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
+import site.sammati_patient.dto.PatientOtpDto;
 import site.sammati_patient.entity.Patient;
 import site.sammati_patient.service.AuthenticationService;
 import site.sammati_patient.service.PatientService;
@@ -21,6 +23,8 @@ import static site.sammati_patient.service.OtpService.*;
 @RequestMapping("/api/auth")
 @CrossOrigin("*")
 public class AuthenticationController {
+
+    private final Environment env;
     private final AuthenticationService authenticationService;
     private final PatientService patientService;
 
@@ -67,5 +71,25 @@ public class AuthenticationController {
         System.out.println("OTP: "+otp);
 
         return otp.equals(pto);
+    }
+
+    @PostMapping("/send-patient-data")
+    public PatientDto getData(@RequestBody PatientOtpDto patientOtpDto)
+    {
+        return patientService.getPatientData(patientOtpDto);
+    }
+
+    @PostMapping("/generate-otp-patient/{patientId}")
+    public Boolean sendOtpToPatient(@PathVariable Integer patientId)
+    {
+        String mobileNumber= patientService.getPatientMobileNumber(patientId);
+        if(mobileNumber==null)
+        {
+            return(false);
+        }
+        Integer otp = generateOTP(Integer.toString(patientId));
+        System.out.println(otp);
+        Integer re = sendOTP(mobileNumber, otp.toString());
+        return (true);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.entity.Patient;
 
 import java.util.Optional;
@@ -19,6 +20,12 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     @Query("select p.patientId from Patient p where p.patientId=?1")
     Integer patientExist(Integer patientId);
+
+    @Query("select p from Patient p where p.patientId=?1")
+    Patient getPatientData(Integer patientId);
+
+    @Query("select p.phoneNumber from Patient p where p.patientId=?1")
+    String getPatientMobile(Integer patientId);
 
     @Modifying
     @Transactional
