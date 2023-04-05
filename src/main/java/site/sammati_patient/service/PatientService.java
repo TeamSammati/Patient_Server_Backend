@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 //import site.sammati_patient.Responce.LoginRes;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
+import site.sammati_patient.dto.PatientOtpDto;
 import site.sammati_patient.entity.Patient;
 
 @Component
@@ -13,6 +14,9 @@ public interface PatientService {
     Boolean isPatientExist(Integer patientId);
 
     Patient findByUserName(String userName);
+    PatientDto getPatientData(PatientOtpDto patientOtpDto);
+
+    String  getPatientMobileNumber(Integer patientId);
 //
 //    public Integer addPatient(PatientDto patientDto);
 //
