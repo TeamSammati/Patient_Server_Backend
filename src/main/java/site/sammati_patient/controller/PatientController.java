@@ -72,6 +72,19 @@ public class PatientController {
         return result;
     }
 
+    @GetMapping("/active-consents")
+    public List<Object> activeConsent(@RequestParam Integer patientId){
+        String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/active-consents?patientID="+patientId;
+        RestTemplate restTemplate = new RestTemplate();
+        List<Object> result = restTemplate.getForObject(uri, List.class);
+        return result;
+    }
 
-
+    @PostMapping("/revoke-consent")
+    public Boolean revokeConsent(@RequestParam Integer consentId){
+        String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/revoke-consent?consentId="+consentId;
+        RestTemplate restTemplate = new RestTemplate();
+        Boolean result = restTemplate.getForObject(uri, Boolean.class);
+        return result;
+    }
 }
