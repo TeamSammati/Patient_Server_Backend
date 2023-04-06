@@ -23,9 +23,9 @@ public class PatientController {
     private final PatientService patientService;
 
 
-    @GetMapping("Request_List")
+    @GetMapping("request-list")
     public List<Object> getConsentRequestByPid(@RequestParam("patientId") Integer patientId) {
-        String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/Request_List/" + patientId;
+        String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/request-list/" + patientId;
         //IP of Sammati server/API call
         RestTemplate restTemplate = new RestTemplate();
         List<Object> result = restTemplate.getForObject(uri, List.class);
@@ -60,10 +60,10 @@ public class PatientController {
 
 
 //    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/get_records")
+    @PostMapping("/get-records")
     public List<Object> getRecords(@RequestParam Integer patientID,@RequestParam Integer reqType)
     {
-        String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/handle_records?patientID="+patientID+"&"+"reqType="+reqType;
+        String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/handle-records?patientID="+patientID+"&"+"reqType="+reqType;
         //IP of Sammati server/API call
 //        System.out.println("sasasas");
         RestTemplate restTemplate = new RestTemplate();

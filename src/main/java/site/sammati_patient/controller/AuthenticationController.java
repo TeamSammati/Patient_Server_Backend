@@ -48,13 +48,13 @@ public class AuthenticationController {
     }
 
     //As of now this method is whitelist to check the functionality(remove from whitelist)
-    @PostMapping("/global_patient_id_exist/{pId}")
+    @PostMapping("/global-patient-id-exist/{pId}")
     public Boolean checkGlobalPatientId(@PathVariable("pId") Integer patientId)
     {
         return patientService.isPatientExist(patientId);
     }
 
-    @PostMapping("/gs_otp")
+    @PostMapping("/gs-otp")
     public Integer gsOTP(@RequestParam("phoneNumber") String phno) {
         Integer otp = generateOTP(phno);
         System.out.println(otp);
@@ -62,7 +62,7 @@ public class AuthenticationController {
         return re;
     }
 
-    @PostMapping("/validate_otp")
+    @PostMapping("/validate-otp")
     public boolean validateOTP(@RequestParam("phoneNumber") String phno, @RequestParam("otp") String otp) {
         String pto = getOPTByKey(phno);
         if(pto==null)
