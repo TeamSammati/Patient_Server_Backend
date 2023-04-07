@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
 import site.sammati_patient.dto.PatientOtpDto;
@@ -13,9 +12,7 @@ import site.sammati_patient.service.AuthenticationService;
 import site.sammati_patient.service.PatientService;
 import site.sammati_patient.util.AuthenticationResponse;
 
-import java.util.List;
-
-import static site.sammati_patient.service.OtpService.*;
+import static site.sammati_patient.service.OtpAndMailService.*;
 
 
 @RestController

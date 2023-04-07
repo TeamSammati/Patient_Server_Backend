@@ -14,6 +14,9 @@ import java.util.List;
 public class ConsentDataDTO {
     Integer consentRequestId;
     Integer patientId;
+    String patientPhoneNo;
     Integer duration;
+    Integer consentType;
     List<ConsentDataMappingDTO> consentDataMappingDTOList;
+    Integer activationStatus;
 }

@@ -9,7 +9,6 @@ import site.sammati_patient.entity.Patient;
 import site.sammati_patient.service.PatientService;
 
 import java.util.List;
-import static site.sammati_patient.service.OtpService.*;
 
 @RestController
 @RequiredArgsConstructor
