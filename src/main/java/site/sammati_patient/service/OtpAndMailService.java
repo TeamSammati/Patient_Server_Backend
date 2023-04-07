@@ -14,11 +14,11 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class OtpService {
+public class OtpAndMailService {
     private static final Integer EXPIRE_MIN = 5;
     private static LoadingCache<String, Integer> otpCache;
 
-    public OtpService()
+    public OtpAndMailService()
     {
         super();
         otpCache = CacheBuilder.newBuilder()
@@ -76,7 +76,8 @@ public class OtpService {
             message= URLEncoder.encode(message, "UTF-8");
             String language="english";
             String route="p";
-            String myUrl="https://www.fast2sms.com/dev/bulk?authorization="+apiKey+"&sender_id="+sendId+"&message="+message+"&language="+language+"&route="+route+"&numbers="+phno;
+            String myMessage = "Hello there, "+message+ " is your one time password (OTP) to register in to Sammati.site";
+            String myUrl="https://www.fast2sms.com/dev/bulk?authorization="+apiKey+"&sender_id="+sendId+"&message="+myMessage+"&language="+language+"&route="+route+"&numbers="+phno;
 
             URL url=new URL(myUrl);
             HttpsURLConnection con=(HttpsURLConnection)url.openConnection();
@@ -100,5 +101,6 @@ public class OtpService {
         }
         return code;
     }
+
 
 }

@@ -14,7 +14,7 @@ import site.sammati_patient.util.Role;
 import java.sql.Date;
 import java.time.LocalDate;
 
-import static site.sammati_patient.service.OtpService.getOPTByKey;
+import static site.sammati_patient.service.OtpAndMailService.getOPTByKey;
 
 @Service
 @RequiredArgsConstructor
