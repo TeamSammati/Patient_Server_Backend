@@ -37,6 +37,7 @@ public class AuthenticationService {
     private final PatientRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final OtpAndMailService otpAndMailService;
     private final AuthenticationManager authenticationManager;
 
     private final TokenRepository tokenRepository;
@@ -77,6 +78,10 @@ public class AuthenticationService {
             encodedString="data:image/png;base64,"+encodedString;
             System.out.println(encodedString);
             System.out.println(patient.getPatientId());
+            Integer pid = patient.getPatientId();
+            String pname = patient.getFirstName()+" "+patient.getLastName();
+            String email = patient.getEmail();
+            otpAndMailService.sendEmail(email, pid, pname);
             repository.addQR(encodedString,patient.getPatientId());
         }catch (Exception e){
             e.printStackTrace();

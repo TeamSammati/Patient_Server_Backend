@@ -9,6 +9,7 @@ import site.sammati_patient.dto.PatientLoginDto;
 import site.sammati_patient.dto.PatientOtpDto;
 import site.sammati_patient.entity.Patient;
 import site.sammati_patient.service.AuthenticationService;
+import site.sammati_patient.service.OtpAndMailService;
 import site.sammati_patient.service.PatientService;
 import site.sammati_patient.util.AuthenticationResponse;
 
