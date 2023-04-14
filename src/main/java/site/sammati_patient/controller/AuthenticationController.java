@@ -46,11 +46,7 @@ public class AuthenticationController {
     }
 
     //As of now this method is whitelist to check the functionality(remove from whitelist)
-    @PostMapping("/global-patient-id-exist/{pId}")
-    public Boolean checkGlobalPatientId(@PathVariable("pId") Integer patientId)
-    {
-        return patientService.isPatientExist(patientId);
-    }
+
 
     @PostMapping("/gs-otp")
     public Integer gsOTP(@RequestParam("phoneNumber") String phno) {
@@ -69,25 +65,5 @@ public class AuthenticationController {
         System.out.println("OTP: "+otp);
 
         return otp.equals(pto);
-    }
-
-    @PostMapping("/send-patient-data")
-    public PatientDto getData(@RequestBody PatientOtpDto patientOtpDto)
-    {
-        return patientService.getPatientData(patientOtpDto);
-    }
-
-    @PostMapping("/generate-otp-patient/{patientId}")
-    public Boolean sendOtpToPatient(@PathVariable Integer patientId)
-    {
-        String mobileNumber= patientService.getPatientMobileNumber(patientId);
-        if(mobileNumber==null)
-        {
-            return(false);
-        }
-        Integer otp = generateOTP(Integer.toString(patientId));
-        System.out.println(otp);
-        Integer re = sendOTP(mobileNumber, otp.toString());
-        return (true);
     }
 }
