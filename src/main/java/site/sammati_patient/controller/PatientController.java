@@ -6,6 +6,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import site.sammati_patient.dto.PatientDetailsDto;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientOtpDto;
 import site.sammati_patient.entity.Patient;
@@ -98,18 +99,43 @@ public class PatientController {
     }
 
     @GetMapping("/active-consents")
-    public List<Object> activeConsent(@RequestParam Integer patientId){
-        String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/active-consents?patientID="+patientId;
+    public ResponseEntity<Object> activeConsent(@RequestParam Integer patientId){
+        String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/active-consents?patientId="+patientId;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer "+env.getProperty("app.sammati_token"));
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
         RestTemplate restTemplate = new RestTemplate();
-        List<Object> result = restTemplate.getForObject(uri, List.class);
+        ResponseEntity<Object> result = restTemplate.exchange(uri, HttpMethod.GET, requestEntity, Object.class);
         return result;
     }
 
     @PostMapping("/revoke-consent")
-    public Boolean revokeConsent(@RequestParam Integer consentId){
+    public ResponseEntity<Boolean> revokeConsent(@RequestParam Integer consentId){
         String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/revoke-consent?consentId="+consentId;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer "+env.getProperty("app.sammati_token"));
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
         RestTemplate restTemplate = new RestTemplate();
-        Boolean result = restTemplate.getForObject(uri, Boolean.class);
+        ResponseEntity<Boolean> result = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, Boolean.class);
+        return result;
+    }
+
+    @GetMapping("/patient-details")
+    public PatientDetailsDto getPatientDetails(@RequestParam Integer patientId){
+        return patientService.getPatientDetails(patientId);
+    }
+
+    @PostMapping("/extend-consent")
+    public  ResponseEntity<Boolean> extendConsent(@RequestParam Integer consentId,@RequestParam Integer days){
+        String uri = "http://"+env.getProperty("app.sammati_server")+":"+env.getProperty("app.sammati_port")+"/extend-consent?consentId="+consentId+"&"+"days="+days;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization", "Bearer "+env.getProperty("app.sammati_token"));
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Boolean> result = restTemplate.exchange(uri, HttpMethod.POST, requestEntity, Boolean.class);
         return result;
     }
 }
