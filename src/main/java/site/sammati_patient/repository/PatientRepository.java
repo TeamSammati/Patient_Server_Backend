@@ -31,4 +31,6 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Transactional
     @Query("update Patient set qrCode=?1 where patientId=?2")
     Integer addQR(String databytes, Integer patientId);
+
+    Patient findByPatientId(Integer patientId);
 }

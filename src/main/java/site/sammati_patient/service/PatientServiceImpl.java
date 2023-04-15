@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import site.sammati_patient.dto.PatientDetailsDto;
 import site.sammati_patient.dto.PatientDto;
 import site.sammati_patient.dto.PatientLoginDto;
 import site.sammati_patient.dto.PatientOtpDto;
@@ -131,5 +132,26 @@ public class PatientServiceImpl implements PatientService {
 //        }
 //    }
 
+    public PatientDetailsDto getPatientDetails(Integer patientId){
+        Patient patient=patientRepository.findByPatientId(patientId);
+        PatientDetailsDto patientDetailsDto=PatientDetailsDto.builder()
+                .patientId(patientId)
+                .gender(patient.getGender())
+                .uidType(patient.getUID_type())
+                .passPhoto(patient.getPassPhoto())
+                .pinCode(patient.getPinCode())
+                .uidNumber(patient.getUID_Number())
+                .state(patient.getState())
+                .address(patient.getAddress())
+                .lastName(patient.getLastName())
+                .firstName(patient.getFirstName())
+                .registrationDate(patient.getRegistrationDate())
+                .email(patient.getEmail())
+                .DOB(patient.getDOB())
+                .phoneNumber(patient.getPhoneNumber())
+                .role(patient.getRole())
+                .build();
+        return patientDetailsDto;
+    }
 
 }
