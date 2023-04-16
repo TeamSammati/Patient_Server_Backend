@@ -1,5 +1,6 @@
 package site.sammati_patient.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -46,6 +47,7 @@ public class Patient implements UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date DOB;
 //   @Temporal(TemporalType.DATE)
     private Date registrationDate;
