@@ -52,7 +52,7 @@ public class AuthenticationService {
                 .DOB(request.getDOB())
                 .address(request.getAddress())
                 .pinCode(request.getPinCode())
-                .role(Role.USER)
+                .role(request.getRole())
                 .state(request.getState())
                 .registrationDate(Date.valueOf(LocalDate.now()))
                 .UID_Number(request.getUidNumber())
@@ -63,7 +63,7 @@ public class AuthenticationService {
                 .build();
 
         var savedUser=repository.save(patient);
-        var jwtToken=jwtService.generateToken(patient);
+        var jwtToken=jwtService.generateToken(patient,request.getRole());
         String data = String.valueOf(savedUser.getPatientId());
         String path = "./target/qr/"+data+".png";
 
@@ -105,7 +105,7 @@ public class AuthenticationService {
     );
     var user = repository.findByUserName(request.getUserName())
             .orElseThrow();
-        var jwtToken=jwtService.generateToken(user);
+        var jwtToken=jwtService.generateToken(user,user.getRole());
         revokeAllUserTokens(user);
         savedUserToken(user,jwtToken);
         return AuthenticationResponse.builder()

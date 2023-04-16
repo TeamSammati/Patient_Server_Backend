@@ -1,5 +1,6 @@
 package site.sammati_patient.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +23,7 @@ public class PatientDto {
     private String uidType;
     private String email;
     private String password;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private Date DOB;
     private Date registrationDate;
     private String state;

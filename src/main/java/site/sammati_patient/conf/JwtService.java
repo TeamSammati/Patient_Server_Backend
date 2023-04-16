@@ -5,8 +5,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import site.sammati_patient.util.Role;
 
 import java.security.Key;
 import java.util.Date;
@@ -25,17 +27,18 @@ public class JwtService {
         final Claims claims= extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(),userDetails);
+    public String generateToken(UserDetails userDetails, Role role){
+        return generateToken(new HashMap<>(),userDetails,role);
     }
     public String generateToken(Map<String,Object> extraClaims,
-                                UserDetails userDetails){
+                                UserDetails userDetails,Role role){
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
+                .claim("authorities",new SimpleGrantedAuthority(role.name()))
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000L*60*60*24*365))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*60))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
 
