@@ -53,6 +53,12 @@ public class PatientController {
         return patientService.getPatientData(patientOtpDto);
     }
 
+    @PostMapping("/send-emergency-patient-data")
+    public PatientDto getEmergencyData(@RequestParam Integer patientId)
+    {
+        return patientService.getEmergencyPatientData(patientId);
+    }
+
     @GetMapping("request-list")
     public ResponseEntity<Object> getConsentRequestByPid(@RequestParam("patientId") Integer patientId) {
         System.out.println("in patient");

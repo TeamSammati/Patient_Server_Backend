@@ -6,11 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import static site.sammati_patient.service.OtpAndMailService.sendEmail;
+
 @SpringBootApplication
 public class SammatiPatientApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SammatiPatientApplication.class, args);
+
 	}
 
 //	@Bean
