@@ -77,6 +77,24 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public PatientDto getEmergencyPatientData(Integer patientId) {
+        Patient patient=patientRepository.getPatientData(patientId);
+        PatientDto patientDto=PatientDto.builder()
+                .patientId(patient.getPatientId())
+                .firstName(patient.getFirstName())
+                .LastName(patient.getLastName())
+                .phoneNumber(patient.getPhoneNumber())
+                .gender(patient.getGender())
+                .DOB(patient.getDOB())
+                .registrationDate(patient.getRegistrationDate())
+                .address(patient.getAddress())
+                .passPhoto(patient.getPassPhoto())
+                .build();
+        System.out.println(patientDto);
+        return patientDto;
+    }
+
+    @Override
     public String getPatientMobileNumber(Integer patientId) {
         return patientRepository.getPatientMobile(patientId);
     }

@@ -17,6 +17,8 @@ public interface PatientService {
     Patient findByUserName(String userName);
     PatientDto getPatientData(PatientOtpDto patientOtpDto);
 
+    PatientDto getEmergencyPatientData(Integer patientId);
+
     String  getPatientMobileNumber(Integer patientId);
 
     PatientDetailsDto getPatientDetails(Integer patientId);
